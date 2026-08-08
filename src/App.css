@@ -1,0 +1,522 @@
+/* ---------- screen layout ---------- */
+.app {
+  display: flex;
+  min-height: 100%;
+}
+
+.app__panel {
+  width: 340px;
+  flex-shrink: 0;
+  padding: 24px;
+  background: #fff;
+  border-right: 1px solid #e2ddd2;
+}
+
+.app__preview {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+  overflow: auto;
+}
+
+.app__preview-scale {
+  width: calc(210mm * 0.62);
+  height: calc(297mm * 0.62);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* ---------- input form ---------- */
+.input-form h1 {
+  font-size: 22px;
+  margin: 0 0 4px;
+}
+
+.input-form__hint {
+  font-size: 14px;
+  color: #5a5468;
+  margin: 0 0 16px;
+}
+
+.input-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.input-form__field textarea,
+.input-form__field input[type='text'] {
+  font: inherit;
+  font-weight: 400;
+  padding: 8px 10px;
+  border: 1px solid #cfc8b8;
+  border-radius: 6px;
+  resize: vertical;
+}
+
+.input-form__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0;
+  font-size: 14px;
+}
+
+.input-form__rails {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border: 1px solid #e2ddd2;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin: 0 0 14px;
+  font-size: 13px;
+}
+
+.input-form__rails legend {
+  padding: 0 4px;
+  font-weight: 600;
+  font-size: 13px;
+  color: #2a2438;
+}
+
+.input-form__rails-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.input-form__rails-width {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  font-size: 12px;
+  color: #5a5468;
+}
+
+.input-form__rails-width input[type='range'] {
+  width: 100%;
+  accent-color: #6d3bd1;
+}
+
+/* ---------- image picker (letter-description artwork) ---------- */
+.image-picker {
+  margin: 4px 0 14px;
+}
+
+.image-picker__hint {
+  font-size: 12px;
+  color: #5a5468;
+  margin: 0 0 8px;
+}
+
+.image-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+  max-height: 140px;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+
+.image-picker__option {
+  border: 1px solid #e2ddd2;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 18px;
+  line-height: 1;
+  padding: 4px 0;
+  cursor: pointer;
+}
+
+.image-picker__option--selected {
+  border-color: #6d3bd1;
+  background: #f1e9ff;
+}
+
+.image-picker__upload {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px dashed #cfc8b8;
+  border-radius: 6px;
+  background: #faf8f3;
+  cursor: pointer;
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.image-picker__selected {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.image-picker__chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  border-radius: 6px;
+  background: #f1ede6;
+  cursor: grab;
+}
+
+.image-picker__chip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.image-picker__chip button {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 16px;
+  height: 16px;
+  line-height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: #b53b3b;
+  color: #fff;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.input-form__print {
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 6px;
+  background: #6d3bd1;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.input-form__print:hover {
+  background: #5c2fb5;
+}
+
+/* ---------- A4 worksheet page ---------- */
+.a4-page {
+  position: relative;
+  width: 210mm;
+  min-height: 297mm;
+  max-height: 297mm;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 10mm;
+  background: #fff;
+  box-shadow: 0 2px 14px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 4mm;
+  transform: scale(0.62);
+  transform-origin: top left;
+}
+
+.a4-page__title {
+  margin: 0;
+  text-align: center;
+  font-size: 16pt;
+  color: #2a2438;
+}
+
+/* decorative icon border filling the page margin band */
+.page-border {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.page-border__row,
+.page-border__col {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 5.5mm;
+  line-height: 1;
+}
+
+.page-border__row {
+  left: 9mm;
+  right: 9mm;
+  height: 8mm;
+}
+
+.page-border__row--top {
+  top: 1mm;
+}
+
+.page-border__row--bottom {
+  bottom: 1mm;
+}
+
+.page-border__col {
+  top: 9mm;
+  bottom: 9mm;
+  width: 8mm;
+  flex-direction: column;
+}
+
+.page-border__col--left {
+  left: 1mm;
+}
+
+.page-border__col--right {
+  right: 1mm;
+}
+
+/* ---------- style section ---------- */
+.style-section {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* model row: fixed side rails for images, with the practiced text centered between them */
+.model-row {
+  display: flex;
+  align-items: stretch;
+  margin: 0 0 2mm;
+}
+
+.model-row__rail {
+  position: relative; /* anchors dragged stickers; also contains them so they can't bleed past this rail */
+  width: 30mm;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* only reserve drag/resize room in a rail once it actually holds a sticker, so empty rails give that space to the practice lines below */
+.model-row__rail--has-images {
+  min-height: 20mm;
+}
+
+/* unruled model text, sized independently of the ruled rows below it */
+.plain-text {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 13pt;
+  line-height: 1.5;
+  padding: 0 2mm;
+  color: #14121c;
+  white-space: normal;
+  word-break: break-word;
+}
+
+/* free-drag wrapper; react-draggable positions this via transform, so it must start pinned top-left */
+.plain-text__sticker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  cursor: grab;
+  touch-action: none;
+}
+
+.plain-text__sticker:active {
+  cursor: grabbing;
+}
+
+.plain-text__resize-handle {
+  position: absolute;
+  right: -1.5mm;
+  bottom: -1.5mm;
+  width: 4mm;
+  height: 4mm;
+  background: #6e3ff2;
+  border: 0.5mm solid #fff;
+  border-radius: 50%;
+  cursor: nwse-resize;
+  touch-action: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.plain-text__side-toggle {
+  position: absolute;
+  top: -1.5mm;
+  left: -1.5mm;
+  width: 4mm;
+  height: 4mm;
+  padding: 0;
+  line-height: 1;
+  font-size: 2.6mm;
+  background: #6e3ff2;
+  color: #fff;
+  border: 0.5mm solid #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+/* only reveal the resize/side controls while the sticker itself is being pointed at */
+.plain-text__sticker:hover .plain-text__resize-handle,
+.plain-text__sticker:hover .plain-text__side-toggle {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.plain-text__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 3mm;
+}
+
+.plain-text__emoji {
+  display: block;
+  line-height: 1;
+}
+
+.style-section__filler-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.style-section__filler-wrap .ruled-paper {
+  height: 100%;
+}
+
+/* ---------- ruled practice line: solid baseline + dotted midline ----------
+   Both guides use mm-based thickness rather than sub-pixel px, so they survive print rasterization
+   (a 0.4px line at 300 DPI is less than one printer dot and disappears when saved to PDF). */
+.ruled-paper {
+  position: relative;
+  background-image:
+    /* baseline at the bottom of the row — solid */
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--row-h) - 0.35mm),
+      rgba(90, 82, 112, 0.65) calc(var(--row-h) - 0.35mm),
+      rgba(90, 82, 112, 0.65) var(--row-h)
+    ),
+
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--row-h) * 0.5 - 0.4px),
+      rgba(90, 82, 112, 0.65) calc(var(--row-h) * 0.5 - 0.4px),
+      rgba(90, 82, 112, 0.65) calc(var(--row-h) * 0.5 + 0.4px),  
+      transparent calc(var(--row-h) * 0.5 + 0.9px),
+      transparent var(--row-h)
+    );
+    /* repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--row-h) - 0.35mm),
+      rgba(90, 82, 112, 0.65) calc(var(--row-h) - 0.35mm),
+      rgba(90, 82, 112, 0.65) var(--row-h)
+    ); */
+    /* midline at exact vertical center of the row — dotted.
+       Each tile is 1.6mm × row-h; the radial-gradient draws one dot at the tile's center,
+       which lands on the midline y-position and repeats horizontally to form a dotted line. */
+    /* radial-gradient(
+      circle at 50% 50%,
+      rgba(90, 82, 112, 0.65) 0.25mm,
+      transparent 0.35mm
+    ); */
+  background-size:
+    100% var(--row-h),
+    1.6mm var(--row-h);
+  background-repeat: repeat, repeat;
+}
+
+.ruled-paper__text {
+  position: relative;
+  z-index: 1;
+  line-height: var(--row-h);
+  /* Sized so x-height lands near the midline (~50% of row-h). */
+  font-size: calc(var(--row-h) * 0.95);
+  padding: 0 2mm;
+  /* Snaps every text line's baseline to the ruled baseline. `--baseline-nudge` (fraction of row-h) is set per-section
+     because different fonts place their natural baseline at different points inside the CSS line-box.
+     Positive = push text down, negative = pull up. Transform, not padding, so negative values also work. */
+  transform: translateY(calc(var(--row-h) * var(--baseline-nudge, 0.15)));
+  white-space: normal;
+  word-break: break-word;
+}
+
+.ruled-paper__text--model {
+  color: #14121c;
+}
+
+.ruled-paper__text--faded {
+  color: #999;
+  opacity: 0.3;
+}
+
+/* ---------- print ---------- */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+
+  /* `zoom` (unlike `transform: scale`) shrinks the layout box itself, so the A4 page + all its mm-based
+     children shrink together to fit inside the printable area — no second page, no cropped bottom.
+     0.97 leaves ~3% headroom, which is enough for Chrome's default `@page margin: 0` behavior.
+     If the browser reserves its own physical margin the content still won't clip because everything shrinks
+     together, but a small white border may appear around the sheet. */
+  .print-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    zoom: 1;
+    transform: none !important;
+    box-shadow: none;
+    /* Force browser to print CSS backgrounds (the ruled-paper baselines are drawn with a linear-gradient). */
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-area .ruled-paper {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .plain-text__resize-handle,
+  .plain-text__side-toggle {
+    display: none !important;
+  }
+}
+
