@@ -12,6 +12,8 @@ function App() {
   const [railWidth, setRailWidth] = useState(30) // mm — width of each visible sticker rail
   const [cursiveNudge, setCursiveNudge] = useState(0.05) // baseline shift (fraction of row-h) for the cursive tracing
   const [printNudge, setPrintNudge] = useState(0.15) // baseline shift for the print tracing
+  const [bindingSide, setBindingSide] = useState('none') // 'none' | 'left' | 'right' | 'both'
+  const [bindingMm, setBindingMm] = useState(15) // mm — width of the binding / hole-punch margin
 
   // Drives the browser tab title, which also becomes the default filename when the user "Saves as PDF".
   useEffect(() => {
@@ -39,6 +41,10 @@ function App() {
           onCursiveNudgeChange={setCursiveNudge}
           printNudge={printNudge}
           onPrintNudgeChange={setPrintNudge}
+          bindingSide={bindingSide}
+          onBindingSideChange={setBindingSide}
+          bindingMm={bindingMm}
+          onBindingMmChange={setBindingMm}
         />
       </div>
       <div className="app__preview">
@@ -53,6 +59,8 @@ function App() {
             railWidth={railWidth}
             cursiveNudge={cursiveNudge}
             printNudge={printNudge}
+            bindingSide={bindingSide}
+            bindingMm={bindingMm}
           />
         </div>
       </div>

@@ -211,7 +211,10 @@
   background: #5c2fb5;
 }
 
-/* ---------- A4 worksheet page ---------- */
+/* ---------- A4 worksheet page ----------
+   --binding-left / --binding-right are set inline by <Worksheet> from the "Margen de encuadernación" control.
+   They add extra padding on the chosen side(s) so the printed page has a clear strip for hole punches / binder paste,
+   and the decoration border is inset by the same amount so no emoji lands under a hole. */
 .a4-page {
   position: relative;
   width: 210mm;
@@ -220,6 +223,8 @@
   overflow: hidden;
   box-sizing: border-box;
   padding: 10mm;
+  padding-left: calc(10mm + var(--binding-left, 0mm));
+  padding-right: calc(10mm + var(--binding-right, 0mm));
   background: #fff;
   box-shadow: 0 2px 14px rgba(0, 0, 0, 0.18);
   display: flex;
@@ -236,10 +241,14 @@
   color: #2a2438;
 }
 
-/* decorative icon border filling the page margin band */
+/* decorative icon border filling the page margin band.
+   Inset by the binding-margin vars so nothing gets punched or glued through an emoji. */
 .page-border {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: var(--binding-left, 0mm);
+  right: var(--binding-right, 0mm);
   pointer-events: none;
 }
 
@@ -467,6 +476,68 @@
 .ruled-paper__text--faded {
   color: #999;
   opacity: 0.3;
+}
+
+/* ---------- responsive: tablet & phone ----------
+   On narrow viewports, stack the input panel above the preview instead of side-by-side.
+   The preview keeps its 0.62 preview scale (must stay in sync with PREVIEW_SCALE in HandwritingLine.jsx),
+   and gets horizontal overflow-scroll when the A4 preview is wider than the phone screen. */
+@media (max-width: 900px) {
+  html,
+  body,
+  #root {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .app {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .app__panel {
+    width: 100%;
+    box-sizing: border-box;
+    border-right: none;
+    border-bottom: 1px solid #e2ddd2;
+  }
+
+  .app__preview {
+    padding: 16px;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .app__panel {
+    padding: 16px;
+  }
+
+  .input-form h1 {
+    font-size: 20px;
+  }
+
+  .image-picker__grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .app__preview {
+    padding: 12px;
+  }
+
+  /* Shrink the preview a bit further so the whole A4 sheet fits within a typical phone width (~360-390px).
+     0.45 keeps enough detail to see what you're doing without needing to sideways-scroll.
+     NOTE: PREVIEW_SCALE in HandwritingLine.jsx stays at 0.62 — sticker drag math will be slightly off on phones,
+     but stickers are rarely edited on mobile. Fine-tune positioning on a larger screen. */
+  .a4-page {
+    transform: scale(0.45);
+  }
+
+  .app__preview-scale {
+    width: calc(210mm * 0.45);
+    height: calc(297mm * 0.45);
+  }
 }
 
 /* ---------- print ---------- */

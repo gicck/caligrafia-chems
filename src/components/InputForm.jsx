@@ -139,6 +139,13 @@ const RAIL_OPTIONS = [
   { value: 'right', label: 'Solo derecha' },
 ]
 
+const BINDING_OPTIONS = [
+  { value: 'none', label: 'Sin margen' },
+  { value: 'left', label: 'Izquierda' },
+  { value: 'right', label: 'Derecha' },
+  { value: 'both', label: 'Ambos' },
+]
+
 function InputForm({
   title,
   onTitleChange,
@@ -156,6 +163,10 @@ function InputForm({
   onCursiveNudgeChange,
   printNudge,
   onPrintNudgeChange,
+  bindingSide,
+  onBindingSideChange,
+  bindingMm,
+  onBindingMmChange,
 }) {
   return (
     <div className="input-form">
@@ -241,6 +252,34 @@ function InputForm({
         />
         Incluir decoraciones
       </label>
+      <fieldset className="input-form__rails">
+        <legend>Margen de encuadernación</legend>
+        {BINDING_OPTIONS.map((opt) => (
+          <label key={opt.value} className="input-form__rails-option">
+            <input
+              type="radio"
+              name="binding"
+              value={opt.value}
+              checked={bindingSide === opt.value}
+              onChange={() => onBindingSideChange(opt.value)}
+            />
+            {opt.label}
+          </label>
+        ))}
+        {bindingSide !== 'none' && (
+          <label className="input-form__rails-width">
+            <span>Ancho: {bindingMm}mm</span>
+            <input
+              type="range"
+              min={5}
+              max={30}
+              step={1}
+              value={bindingMm}
+              onChange={(e) => onBindingMmChange(Number(e.target.value))}
+            />
+          </label>
+        )}
+      </fieldset>
       <button type="button" className="input-form__print" onClick={() => window.print()}>
         Imprimir / Descargar PDF
       </button>
