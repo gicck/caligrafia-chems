@@ -14,6 +14,8 @@ function App() {
   const [printNudge, setPrintNudge] = useState(0.15) // baseline shift for the print tracing
   const [bindingSide, setBindingSide] = useState('none') // 'none' | 'left' | 'right' | 'both'
   const [bindingMm, setBindingMm] = useState(15) // mm — width of the binding / hole-punch margin
+  const [sectionCount, setSectionCount] = useState(2) // 1 | 2 — how many calligraphy blocks on the page
+  const [singleStyle, setSingleStyle] = useState('cursive') // 'cursive' | 'print' — which style, when sectionCount is 1
 
   // Drives the browser tab title, which also becomes the default filename when the user "Saves as PDF".
   useEffect(() => {
@@ -45,6 +47,10 @@ function App() {
           onBindingSideChange={setBindingSide}
           bindingMm={bindingMm}
           onBindingMmChange={setBindingMm}
+          sectionCount={sectionCount}
+          onSectionCountChange={setSectionCount}
+          singleStyle={singleStyle}
+          onSingleStyleChange={setSingleStyle}
         />
       </div>
       <div className="app__preview">
@@ -61,6 +67,8 @@ function App() {
             printNudge={printNudge}
             bindingSide={bindingSide}
             bindingMm={bindingMm}
+            sectionCount={sectionCount}
+            singleStyle={singleStyle}
           />
         </div>
       </div>

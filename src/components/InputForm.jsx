@@ -167,6 +167,10 @@ function InputForm({
   onBindingSideChange,
   bindingMm,
   onBindingMmChange,
+  sectionCount,
+  onSectionCountChange,
+  singleStyle,
+  onSingleStyleChange,
 }) {
   return (
     <div className="input-form">
@@ -174,6 +178,67 @@ function InputForm({
       <p className="input-form__hint">
         Escribe una frase y genera una hoja A4 para practicar en cursiva e imprenta.
       </p>
+      <div className="input-form__layout" role="group" aria-label="Cantidad de estilos por hoja">
+        <button
+          type="button"
+          className={`input-form__layout-btn${sectionCount === 2 ? ' input-form__layout-btn--active' : ''}`}
+          onClick={() => onSectionCountChange(2)}
+          title="Dos estilos por hoja (cursiva + imprenta)"
+          aria-pressed={sectionCount === 2}
+        >
+          <svg viewBox="0 0 32 40" width="26" height="32" aria-hidden="true">
+            <rect x="2" y="2" width="28" height="36" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+            <line x1="4" y1="10" x2="28" y2="10" stroke="currentColor" strokeWidth="1" />
+            <line x1="4" y1="14" x2="28" y2="14" stroke="currentColor" strokeWidth="0.6" strokeDasharray="1 1" />
+            <line x1="4" y1="18" x2="28" y2="18" stroke="currentColor" strokeWidth="1" />
+            <line x1="4" y1="26" x2="28" y2="26" stroke="currentColor" strokeWidth="1" />
+            <line x1="4" y1="30" x2="28" y2="30" stroke="currentColor" strokeWidth="0.6" strokeDasharray="1 1" />
+            <line x1="4" y1="34" x2="28" y2="34" stroke="currentColor" strokeWidth="1" />
+          </svg>
+          <span>2 estilos</span>
+        </button>
+        <button
+          type="button"
+          className={`input-form__layout-btn${sectionCount === 1 ? ' input-form__layout-btn--active' : ''}`}
+          onClick={() => onSectionCountChange(1)}
+          title="Un solo estilo, más espacio por línea"
+          aria-pressed={sectionCount === 1}
+        >
+          <svg viewBox="0 0 32 40" width="26" height="32" aria-hidden="true">
+            <rect x="2" y="2" width="28" height="36" rx="2" fill="none" stroke="currentColor" strokeWidth="1.5" />
+            <line x1="4" y1="12" x2="28" y2="12" stroke="currentColor" strokeWidth="1" />
+            <line x1="4" y1="18" x2="28" y2="18" stroke="currentColor" strokeWidth="0.6" strokeDasharray="1 1" />
+            <line x1="4" y1="24" x2="28" y2="24" stroke="currentColor" strokeWidth="1" />
+            <line x1="4" y1="30" x2="28" y2="30" stroke="currentColor" strokeWidth="0.6" strokeDasharray="1 1" />
+            <line x1="4" y1="36" x2="28" y2="36" stroke="currentColor" strokeWidth="1" />
+          </svg>
+          <span>1 estilo</span>
+        </button>
+      </div>
+      {sectionCount === 1 && (
+        <div className="input-form__single-style" role="group" aria-label="Estilo a mostrar">
+          <label className="input-form__rails-option">
+            <input
+              type="radio"
+              name="single-style"
+              value="cursive"
+              checked={singleStyle === 'cursive'}
+              onChange={() => onSingleStyleChange('cursive')}
+            />
+            Cursiva
+          </label>
+          <label className="input-form__rails-option">
+            <input
+              type="radio"
+              name="single-style"
+              value="print"
+              checked={singleStyle === 'print'}
+              onChange={() => onSingleStyleChange('print')}
+            />
+            Imprenta
+          </label>
+        </div>
+      )}
       <label className="input-form__field">
         Título de la hoja
         <input
