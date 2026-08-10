@@ -29,6 +29,10 @@ function Worksheet({
   bindingMm,
   sectionCount,
   singleStyle,
+  cursiveScale,
+  printScale,
+  cursiveRowScale,
+  printRowScale,
 }) {
   // Extra padding + decoration inset on the binding side(s) reserves a clear strip for hole-punches / paste area.
   const left = bindingSide === 'left' || bindingSide === 'both' ? `${bindingMm}mm` : '0mm'
@@ -50,6 +54,8 @@ function Worksheet({
           images={images}
           onImagesChange={onImagesChange}
           baselineNudge={cursiveNudge}
+          letterScale={cursiveScale}
+          rowScale={cursiveRowScale}
           rails={rails}
           railWidth={railWidth}
         />
@@ -63,6 +69,8 @@ function Worksheet({
           images={images}
           onImagesChange={onImagesChange}
           baselineNudge={printNudge}
+          letterScale={printScale}
+          rowScale={printRowScale}
           rails={rails}
           railWidth={railWidth}
         />

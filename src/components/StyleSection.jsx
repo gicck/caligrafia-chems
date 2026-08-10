@@ -13,10 +13,12 @@ function shrinkFactor(charCount) {
   return Math.min(1, (charCount - FIT_START_CHARS) / (FIT_END_CHARS - FIT_START_CHARS))
 }
 
-function StyleSection({ text, modelFont, traceFont, placeholder, sectionHeight, images, onImagesChange, baselineNudge, rails, railWidth }) {
+function StyleSection({ text, modelFont, traceFont, placeholder, sectionHeight, images, onImagesChange, baselineNudge, letterScale, rowScale = 1, rails, railWidth }) {
   const displayText = text.trim() ? text : placeholder
   const factor = shrinkFactor(displayText.length)
-  const rowHeight = `${BASE_ROW_HEIGHT - factor * (BASE_ROW_HEIGHT - MIN_ROW_HEIGHT)}mm`
+  const baseRowMm = BASE_ROW_HEIGHT - factor * (BASE_ROW_HEIGHT - MIN_ROW_HEIGHT)
+  // `rowScale` lets the user narrow or widen the guide rows on top of the auto-fit calculation.
+  const rowHeight = `${baseRowMm * rowScale}mm`
   const modelFontSize = `${BASE_MODEL_FONT - factor * (BASE_MODEL_FONT - MIN_MODEL_FONT)}pt`
 
   return (
@@ -32,7 +34,7 @@ function StyleSection({ text, modelFont, traceFont, placeholder, sectionHeight, 
         railWidth={railWidth}
       />
       <div className="style-section__filler-wrap">
-        <HandwritingLine text={displayText} fontFamily={traceFont} rowHeight={rowHeight} faded baselineNudge={baselineNudge} />
+        <HandwritingLine text={displayText} fontFamily={traceFont} rowHeight={rowHeight} faded baselineNudge={baselineNudge} letterScale={letterScale} />
       </div>
     </section>
   )

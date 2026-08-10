@@ -10,6 +10,10 @@
   padding: 24px;
   background: #fff;
   border-right: 1px solid #e2ddd2;
+  /* Let the panel scroll independently so the preview stays fixed while the user tweaks controls.
+     Combined with the sticky print button below, the user never has to scroll to reach "Imprimir". */
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .app__preview {
@@ -18,6 +22,49 @@
   justify-content: center;
   padding: 24px;
   overflow: auto;
+  position: relative; /* anchors the floating zoom widget */
+}
+
+/* Floating zoom widget pinned to the viewport's right edge, so it stays visible no matter how the preview scrolls. */
+.preview-zoom {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  background: #fff;
+  border: 1px solid #e2ddd2;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  z-index: 20;
+}
+
+.preview-zoom__btn,
+.preview-zoom__value {
+  width: 36px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: #f1ede6;
+  color: #2a2438;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.preview-zoom__btn:hover,
+.preview-zoom__value:hover {
+  background: #e6dfd0;
+}
+
+.preview-zoom__value {
+  font-size: 12px;
+  font-weight: 500;
+  color: #5a5468;
 }
 
 .app__preview-scale {
@@ -239,13 +286,24 @@
 
 .input-form__print {
   width: 100%;
-  padding: 10px 14px;
+  padding: 12px 14px;
   border: none;
   border-radius: 6px;
   background: #6d3bd1;
   color: #fff;
   font-weight: 600;
+  font-size: 15px;
   cursor: pointer;
+  /* Sticks to the bottom of the scrollable panel so it stays reachable without scrolling.
+     Negative bottom + margin cancels the panel's 24px bottom padding so the button hugs the very edge. */
+  position: sticky;
+  bottom: -24px;
+  margin: 8px -24px -24px;
+  padding-left: 24px;
+  padding-right: 24px;
+  border-radius: 0;
+  z-index: 5;
+  box-shadow: 0 -6px 12px -4px rgba(255, 255, 255, 0.95);
 }
 
 .input-form__print:hover {
@@ -499,8 +557,9 @@
   position: relative;
   z-index: 1;
   line-height: var(--row-h);
-  /* Sized so x-height lands near the midline (~50% of row-h). */
-  font-size: calc(var(--row-h) * 0.95);
+  /* Font size is a fraction of the ruled row-height, so the letters always keep their proportion to the guides.
+     `--letter-scale` is set per-section (from the "Tamaño de letra" sliders); default 0.95 lands the x-height on the midline. */
+  font-size: calc(var(--row-h) * var(--letter-scale, 0.95));
   padding: 0 2mm;
   /* Snaps every text line's baseline to the ruled baseline. `--baseline-nudge` (fraction of row-h) is set per-section
      because different fonts place their natural baseline at different points inside the CSS line-box.
@@ -541,6 +600,17 @@
     box-sizing: border-box;
     border-right: none;
     border-bottom: 1px solid #e2ddd2;
+    /* On mobile the whole page scrolls, so remove the panel's own scroll container. */
+    max-height: none;
+    overflow-y: visible;
+  }
+
+  .input-form__print {
+    position: static;
+    margin: 8px 0 0;
+    padding: 12px 14px;
+    border-radius: 6px;
+    box-shadow: none;
   }
 
   .app__preview {
@@ -553,6 +623,14 @@
 @media (max-width: 480px) {
   .app__panel {
     padding: 16px;
+  }
+
+  .preview-zoom {
+    right: 12px;
+    top: auto;
+    bottom: 12px;
+    transform: none;
+    flex-direction: row;
   }
 
   .input-form h1 {
@@ -627,7 +705,8 @@
   }
 
   .plain-text__resize-handle,
-  .plain-text__side-toggle {
+  .plain-text__side-toggle,
+  .preview-zoom {
     display: none !important;
   }
 }

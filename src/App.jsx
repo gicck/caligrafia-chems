@@ -16,6 +16,11 @@ function App() {
   const [bindingMm, setBindingMm] = useState(15) // mm — width of the binding / hole-punch margin
   const [sectionCount, setSectionCount] = useState(2) // 1 | 2 — how many calligraphy blocks on the page
   const [singleStyle, setSingleStyle] = useState('cursive') // 'cursive' | 'print' — which style, when sectionCount is 1
+  const [cursiveScale, setCursiveScale] = useState(0.85) // tracing font size for cursive, as a fraction of row-h
+  const [printScale, setPrintScale] = useState(0.85) // tracing font size for print, as a fraction of row-h
+  const [cursiveRowScale, setCursiveRowScale] = useState(1.0) // multiplier on the auto-calculated cursive row-h
+  const [printRowScale, setPrintRowScale] = useState(1.0) // multiplier on the auto-calculated print row-h
+  const [previewZoom, setPreviewZoom] = useState(1.0) // user-controlled preview zoom on top of the fixed 0.62 base scale
 
   // Drives the browser tab title, which also becomes the default filename when the user "Saves as PDF".
   useEffect(() => {
@@ -51,10 +56,47 @@ function App() {
           onSectionCountChange={setSectionCount}
           singleStyle={singleStyle}
           onSingleStyleChange={setSingleStyle}
+          cursiveScale={cursiveScale}
+          onCursiveScaleChange={setCursiveScale}
+          printScale={printScale}
+          onPrintScaleChange={setPrintScale}
+          cursiveRowScale={cursiveRowScale}
+          onCursiveRowScaleChange={setCursiveRowScale}
+          printRowScale={printRowScale}
+          onPrintRowScaleChange={setPrintRowScale}
         />
       </div>
       <div className="app__preview">
-        <div className="app__preview-scale">
+        <div className="preview-zoom" role="group" aria-label="Zoom de la vista previa">
+          <button
+            type="button"
+            className="preview-zoom__btn"
+            onClick={() => setPreviewZoom((z) => Math.max(0.5, +(z - 0.1).toFixed(2)))}
+            aria-label="Alejar"
+            title="Alejar"
+          >
+            −
+          </button>
+          <button
+            type="button"
+            className="preview-zoom__value"
+            onClick={() => setPreviewZoom(1.0)}
+            aria-label="Restablecer zoom"
+            title="Restablecer zoom"
+          >
+            {Math.round(previewZoom * 100)}%
+          </button>
+          <button
+            type="button"
+            className="preview-zoom__btn"
+            onClick={() => setPreviewZoom((z) => Math.min(2.5, +(z + 0.1).toFixed(2)))}
+            aria-label="Acercar"
+            title="Acercar"
+          >
+            +
+          </button>
+        </div>
+        <div className="app__preview-scale" style={{ zoom: previewZoom }}>
           <Worksheet
             title={title}
             text={text}
@@ -69,6 +111,10 @@ function App() {
             bindingMm={bindingMm}
             sectionCount={sectionCount}
             singleStyle={singleStyle}
+            cursiveScale={cursiveScale}
+            printScale={printScale}
+            cursiveRowScale={cursiveRowScale}
+            printRowScale={printRowScale}
           />
         </div>
       </div>

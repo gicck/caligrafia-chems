@@ -171,6 +171,14 @@ function InputForm({
   onSectionCountChange,
   singleStyle,
   onSingleStyleChange,
+  cursiveScale,
+  onCursiveScaleChange,
+  printScale,
+  onPrintScaleChange,
+  cursiveRowScale,
+  onCursiveRowScaleChange,
+  printRowScale,
+  onPrintRowScaleChange,
 }) {
   return (
     <div className="input-form">
@@ -305,6 +313,56 @@ function InputForm({
             step={0.01}
             value={printNudge}
             onChange={(e) => onPrintNudgeChange(Number(e.target.value))}
+          />
+        </label>
+      </fieldset>
+      <fieldset className="input-form__rails">
+        <legend>Tamaño de letra</legend>
+        <label className="input-form__rails-width">
+          <span>Cursiva: {cursiveScale.toFixed(2)}×</span>
+          <input
+            type="range"
+            min={0.3}
+            max={1.4}
+            step={0.05}
+            value={cursiveScale}
+            onChange={(e) => onCursiveScaleChange(Number(e.target.value))}
+          />
+        </label>
+        <label className="input-form__rails-width">
+          <span>Imprenta: {printScale.toFixed(2)}×</span>
+          <input
+            type="range"
+            min={0.3}
+            max={1.4}
+            step={0.05}
+            value={printScale}
+            onChange={(e) => onPrintScaleChange(Number(e.target.value))}
+          />
+        </label>
+      </fieldset>
+      <fieldset className="input-form__rails">
+        <legend>Alto de la guía</legend>
+        <label className="input-form__rails-width">
+          <span>Cursiva: {cursiveRowScale.toFixed(2)}×</span>
+          <input
+            type="range"
+            min={0.6}
+            max={1.5}
+            step={0.05}
+            value={cursiveRowScale}
+            onChange={(e) => onCursiveRowScaleChange(Number(e.target.value))}
+          />
+        </label>
+        <label className="input-form__rails-width">
+          <span>Imprenta: {printRowScale.toFixed(2)}×</span>
+          <input
+            type="range"
+            min={0.6}
+            max={1.5}
+            step={0.05}
+            value={printRowScale}
+            onChange={(e) => onPrintRowScaleChange(Number(e.target.value))}
           />
         </label>
       </fieldset>

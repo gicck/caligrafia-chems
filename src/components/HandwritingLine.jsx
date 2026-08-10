@@ -101,7 +101,7 @@ function Sticker({ image, images, onImagesChange }) {
 // Model text (ruled=false) has no guide lines; traced text (ruled=true) sits on a single baseline per row.
 // `baselineNudge` (0..1 of row-h) pushes each text line down so its glyph baseline snaps onto the ruled baseline.
 // It is font-specific because different fonts place their natural baseline at different points inside the CSS line-box.
-function HandwritingLine({ text, fontFamily, fontSize, images, onImagesChange, rowHeight = '14mm', faded = false, ruled = true, baselineNudge = 0.15, rails = 'both', railWidth = 30 }) {
+function HandwritingLine({ text, fontFamily, fontSize, images, onImagesChange, rowHeight = '14mm', faded = false, ruled = true, baselineNudge = 0.15, letterScale = 0.95, rails = 'both', railWidth = 30 }) {
   if (!ruled) {
     const all = images || []
     // When only one rail is shown, dump every sticker into it regardless of its stored `side`.
@@ -140,7 +140,7 @@ function HandwritingLine({ text, fontFamily, fontSize, images, onImagesChange, r
   }
 
   return (
-    <div className="ruled-paper" style={{ '--row-h': rowHeight, '--baseline-nudge': baselineNudge }}>
+    <div className="ruled-paper" style={{ '--row-h': rowHeight, '--baseline-nudge': baselineNudge, '--letter-scale': letterScale }}>
       <div
         className={`ruled-paper__text${faded ? ' ruled-paper__text--faded' : ' ruled-paper__text--model'}`}
         style={{ fontFamily }}
