@@ -677,6 +677,12 @@
     visibility: hidden;
   }
 
+  /* Reset any user-applied preview zoom so it doesn't scale the printed page.
+     (Chrome propagates `zoom` from ancestors down to `position: fixed` descendants.) */
+  .app__preview-scale {
+    zoom: 1 !important;
+  }
+
   .print-area,
   .print-area * {
     visibility: visible;
@@ -688,7 +694,9 @@
      If the browser reserves its own physical margin the content still won't clip because everything shrinks
      together, but a small white border may appear around the sheet. */
   .print-area {
-    position: absolute;
+    /* `fixed`, not `absolute` — the preview pane has `position: relative` (to anchor the zoom widget),
+       and `absolute` would resolve against it instead of the print page box. */
+    position: fixed;
     top: 0;
     left: 0;
     zoom: 1;
