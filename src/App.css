@@ -574,8 +574,9 @@
 }
 
 .ruled-paper__text--faded {
-  color: #999;
-  opacity: 0.3;
+  color: #666;
+  /* `--trace-opacity` is set on the .a4-page by <Worksheet> from the "Brillo del trazo" slider. */
+  opacity: var(--trace-opacity, 0.35);
 }
 
 /* ---------- responsive: tablet & phone ----------

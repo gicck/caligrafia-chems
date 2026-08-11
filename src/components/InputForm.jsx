@@ -179,6 +179,8 @@ function InputForm({
   onCursiveRowScaleChange,
   printRowScale,
   onPrintRowScaleChange,
+  traceOpacity,
+  onTraceOpacityChange,
 }) {
   return (
     <div className="input-form">
@@ -338,6 +340,20 @@ function InputForm({
             step={0.05}
             value={printScale}
             onChange={(e) => onPrintScaleChange(Number(e.target.value))}
+          />
+        </label>
+      </fieldset>
+      <fieldset className="input-form__rails">
+        <legend>Brillo del trazo</legend>
+        <label className="input-form__rails-width">
+          <span>Opacidad: {Math.round(traceOpacity * 100)}%</span>
+          <input
+            type="range"
+            min={0.1}
+            max={1}
+            step={0.05}
+            value={traceOpacity}
+            onChange={(e) => onTraceOpacityChange(Number(e.target.value))}
           />
         </label>
       </fieldset>

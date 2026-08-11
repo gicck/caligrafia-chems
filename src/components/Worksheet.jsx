@@ -33,11 +33,16 @@ function Worksheet({
   printScale,
   cursiveRowScale,
   printRowScale,
+  traceOpacity,
 }) {
   // Extra padding + decoration inset on the binding side(s) reserves a clear strip for hole-punches / paste area.
   const left = bindingSide === 'left' || bindingSide === 'both' ? `${bindingMm}mm` : '0mm'
   const right = bindingSide === 'right' || bindingSide === 'both' ? `${bindingMm}mm` : '0mm'
-  const bindingStyle = { '--binding-left': left, '--binding-right': right }
+  const bindingStyle = {
+    '--binding-left': left,
+    '--binding-right': right,
+    '--trace-opacity': traceOpacity,
+  }
   const sectionHeight = sectionCount === 1 ? SECTION_HEIGHT_ONE : SECTION_HEIGHT_TWO
   const showCursive = sectionCount === 2 || singleStyle === 'cursive'
   const showPrint = sectionCount === 2 || singleStyle === 'print'

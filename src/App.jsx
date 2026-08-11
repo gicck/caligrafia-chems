@@ -21,6 +21,7 @@ function App() {
   const [cursiveRowScale, setCursiveRowScale] = useState(1.0) // multiplier on the auto-calculated cursive row-h
   const [printRowScale, setPrintRowScale] = useState(1.0) // multiplier on the auto-calculated print row-h
   const [previewZoom, setPreviewZoom] = useState(1.0) // user-controlled preview zoom on top of the fixed 0.62 base scale
+  const [traceOpacity, setTraceOpacity] = useState(0.35) // opacity of the faded tracing letters (0 = invisible, 1 = solid)
 
   // Drives the browser tab title, which also becomes the default filename when the user "Saves as PDF".
   useEffect(() => {
@@ -64,6 +65,8 @@ function App() {
           onCursiveRowScaleChange={setCursiveRowScale}
           printRowScale={printRowScale}
           onPrintRowScaleChange={setPrintRowScale}
+          traceOpacity={traceOpacity}
+          onTraceOpacityChange={setTraceOpacity}
         />
       </div>
       <div className="app__preview">
@@ -115,6 +118,7 @@ function App() {
             printScale={printScale}
             cursiveRowScale={cursiveRowScale}
             printRowScale={printRowScale}
+            traceOpacity={traceOpacity}
           />
         </div>
       </div>
